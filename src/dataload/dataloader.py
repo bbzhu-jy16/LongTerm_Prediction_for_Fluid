@@ -29,7 +29,7 @@ def load_density_output(density_path,frame0,frame_num):
     for filename in tqdm(density_file):
         data=np.load(filename,allow_pickle=True)
         data=np.squeeze(data['data'])
-        density_data.append(data['data'][frame0+1:frame0+1+frame_num])
+        density_data.append(data[frame0+1:frame0+1+frame_num])
     return density_data
 
 def load_velocity_frame(velocity_path, frame0, frame_num,dim):

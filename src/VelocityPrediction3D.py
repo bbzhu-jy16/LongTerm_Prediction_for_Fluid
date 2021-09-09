@@ -39,7 +39,7 @@ def train(args, model):
     vel_data = np.asarray(vel_data)
 
     frame_input=args.frame_input
-    frame_output=args.frame_output
+    frame_output=args.frame_num-args.frame_input
 
     model.compile(optimizer='adam',loss=velocity_loss_3D)
     checkpointer = ModelCheckpoint(os.path.join(args.model_path,'3D_Long_Velocity_Prediction_{epoch:03d}.h5'),verbose=1,save_weights_only=False,save_best_only=False)
@@ -58,7 +58,7 @@ def train(args, model):
 def test(args, model):
     frame0 = args.frame0
     frame_input = args.frame_input
-    frame_output = args.frame_output
+    frame_output = args.frame_num-args.frame_input
     res=args.resolution
     vel_file=glob.glob(args.velocity_test_path+"/*.npz")
     err_all=[]
@@ -101,7 +101,7 @@ def test(args, model):
 def main():
     print("Main Function Running")
     args=Velocity3D_parse()
-    model=VelocityPrediction3D(args.resolution,args.frame_num)
+    model=VelocityPrediction3D(args.resolution,args.frame_input,args.frame_num-args.frame_input)
     mode=args.mode
     if mode=="train":
         train(args,model)
