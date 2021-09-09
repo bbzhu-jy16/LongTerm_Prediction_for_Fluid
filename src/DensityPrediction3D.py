@@ -38,9 +38,9 @@ def train(args,model):
     frame0=args.frame0
     frame_num=args.frame_num
 
-    density_data = load_density_input(args.density_datapath, frame0, frame_num)
-    vel_data = load_velocity_frame(args.velocity_datapath, frame0, frame_num)
-    density_GT = load_density_output(args.density_datapath, frame0, frame_num)
+    density_data = load_density_input(args.density_train_path, frame0)
+    vel_data = load_velocity_frame(args.velocity_train_path, frame0, frame_num, 3)
+    density_GT = load_density_output(args.density_train_path, frame0, frame_num)
 
     vel_data = np.asarray(vel_data) #(frame_num,64,64,64,3)
     density_GT=np.asarray(density_GT) #(frame_num,64,64,64)
@@ -127,3 +127,6 @@ def main():
     elif mode=="test":
         model=load_model(args.model_path+"/"+args.model_name)
         test(args,model)
+
+if __name__=="__main__":
+    main()

@@ -108,3 +108,6 @@ def main():
     elif mode=="test":
         model=load_model(args.model_path+"/"+args.model_name)
         test(args,model)
+
+if __name__=="__main__":
+    main()
