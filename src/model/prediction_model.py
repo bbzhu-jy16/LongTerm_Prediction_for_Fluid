@@ -382,19 +382,19 @@ def VelocityPrediction2D(res,frame_input,frame_output):
     conv4 = BatchNormalization()(conv4, training=False)
     conv4 = LeakyReLU(alpha=0.2)(conv4)
     
-    hidden_layer = Reshape((frame_input,int(res*res/4)))(conv4)
-    hidden_layer = LSTM(int(res*res/4), input_shape=(frame_input,int(res*res/4)), return_sequences=True,
-                        activation='tanh', recurrent_activation='hard_sigmoid',
-                        use_bias=True, kernel_initializer='glorot_uniform',
-                        recurrent_initializer='orthogonal', bias_initializer='zeros')(hidden_layer)
-    hidden_layer = BatchNormalization()(hidden_layer, training=False)
-    hidden_layer = Reshape((int(res*res/4),frame_input))(hidden_layer)
+    hidden_layer = Reshape((int(res*res/4),frame_input))(conv4)
     hidden_layer = Conv1D(filters=frame_output,
                           kernel_size=2,
                           strides=1,
                           activation='relu',
                           padding='same')(hidden_layer)
     hidden_layer = LeakyReLU(alpha=0.2)(hidden_layer)
+    hidden_layer = BatchNormalization()(hidden_layer, training=False)
+    hidden_layer = Reshape((frame_output,int(res*res/4)))(hidden_layer)
+    hidden_layer = LSTM(int(res*res/4), input_shape=(frame_output,int(res*res/4)), return_sequences=True,
+                        activation='tanh', recurrent_activation='hard_sigmoid',
+                        use_bias=True, kernel_initializer='glorot_uniform',
+                        recurrent_initializer='orthogonal', bias_initializer='zeros')(hidden_layer)
     hidden_layer = BatchNormalization()(hidden_layer, training=False)
     hidden_layer = Reshape((frame_output,int(res/16),int(res/16),64))(hidden_layer)
     
