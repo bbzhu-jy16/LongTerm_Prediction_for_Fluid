@@ -30,9 +30,9 @@ def psnr_den_2D(gt, pre):
                 mse=mse+(gt[frame,i,j]-pre[frame,i,j])*(gt[frame,i,j]-pre[frame,i,j])
         mse=mse/(sizex*sizey)
         maxi=np.max(np.max(np.abs(gt[frame])))
-        scale=255/maxi
-        #psnr[frame]=10*math.log10(maxi*maxi/mse)
-        psnr[frame]=10*math.log10(255*255/(mse*scale))
+        #scale=255/maxi
+        psnr[frame]=10*math.log10(maxi*maxi/mse)
+        #psnr[frame]=10*math.log10(255*255/(mse*scale))
     return psnr
 
 def cos_den_2D(gt, pre):
@@ -70,7 +70,7 @@ def psnr_den_3D(gt, pre):
                     mse=mse+(gt[frame,i,j,k]-pre[frame,i,j,k])*(gt[frame,i,j,k]-pre[frame,i,j,k])
         mse=mse/(sizex*sizey*sizez)
         maxi=np.max(np.max(np.max(np.abs(gt[frame]))))
-        psnr[frame]=10*math.log10(255*maxi/mse)
+        psnr[frame]=10*math.log10(maxi*maxi/mse)
     return psnr
 
 def cos_den_3D(gt, pre):
@@ -113,7 +113,7 @@ def psnr_vel_2D(gt,pre):
                 for j in range(sizey):
                     mse=mse+(gt[frame,i,j,dim]-pre[frame,i,j,dim])*(gt[frame,i,j,dim]-pre[frame,i,j,dim])
         mse=mse/(sizex*sizey)
-        psnr[frame]=10*math.log10(255*maxi/mse)
+        psnr[frame]=10*math.log10(maxi*maxi/mse)
     return psnr
 
 def cos_vel_2D(gt, pre):
@@ -158,7 +158,7 @@ def psnr_vel_3D(gt,pre):
                     for k in range(sizez):
                         mse=mse+(gt[frame,i,j,k,dim]-pre[frame,i,j,k,dim])*(gt[frame,i,j,k,dim]-pre[frame,i,j,k,dim])
         mse=mse/(sizex*sizey*sizez)
-        psnr[frame]=10*math.log10(255*maxi/mse)
+        psnr[frame]=10*math.log10(maxi*maxi/mse)
     return psnr
 
 def cos_vel_3D(gt, pre):
